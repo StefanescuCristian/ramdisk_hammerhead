@@ -260,10 +260,13 @@ on property:sys.boot_completed=1
     write /sys/module/pm_8x60/modes/cpu2/retention/idle_enabled 1
     write /sys/module/pm_8x60/modes/cpu3/retention/idle_enabled 1
 
-	stop thermal-engine
-	start fkbootscript
-	write /dev/cpuctl/apps/cpu.notify_on_migrate 1
+    stop thermal-engine
+    start fkbootscript
+    write /dev/cpuctl/apps/cpu.notify_on_migrate 1
     #start mpdecision
+
+    #enable slimport detection
+    write /sys/module/slimport/parameters/enable_irq 1
 
 service rmt_storage /system/bin/rmt_storage
     class core
