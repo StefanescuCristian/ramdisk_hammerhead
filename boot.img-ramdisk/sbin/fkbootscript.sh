@@ -20,8 +20,9 @@ echo 20000 1400000:40000 1700000:20000 > /sys/devices/system/cpu/cpufreq/interac
 echo 40000 1700000:80000 > /sys/devices/system/cpu/cpufreq/interactive/min_sample_time
 echo 40000 500000:30000 1700000:20000 > /sys/devices/system/cpu/cpufreq/interactive/timer_rate
 echo -1 800000:30000 1100000:40000 1700000:20000 > /sys/devices/system/cpu/cpufreq/interactive/timer_slack
+echo 0 > /proc/sys/vm/swappiness
+echo 50 > /proc/sys/vm/vfs_cache_pressure
 
-echo 2 > /sys/devices/system/cpu/sched_mc_power_savings
 
 # wait for systemui and increase its priority
 while sleep 1; do
