@@ -24,7 +24,8 @@ echo 0 > /proc/sys/vm/swappiness
 echo 50 > /proc/sys/vm/vfs_cache_pressure
 echo 1190400 > /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
 echo 1190400 > /sys/devices/system/cpu/cpufreq/interactive/up_threshold_any_cpu_freq
-
+echo 1 > /sys/kernel/mm/ksm/run
+echo 1 > /sys/kernel/mm/ksm/deferred_timer
 
 
 # wait for systemui and increase its priority
