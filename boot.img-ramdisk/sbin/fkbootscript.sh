@@ -27,6 +27,7 @@ echo 1190400 > /sys/devices/system/cpu/cpufreq/interactive/up_threshold_any_cpu_
 echo 1 > /sys/kernel/mm/ksm/run
 echo 1 > /sys/kernel/mm/ksm/deferred_timer
 echo 256 > /sys/kernel/mm/ksm/pages_to_scan
+echo 3500 > /sys/kernel/mm/ksm/sleep_millisecs
 
 # wait for systemui and increase its priority
 while sleep 1; do
