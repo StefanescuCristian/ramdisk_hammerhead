@@ -192,23 +192,12 @@ on post-fs-data
     write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor "interactive"
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor "interactive"
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor "interactive"
-    #write /sys/devices/system/cpu/cpufreq/ondemand/up_threshold 90
-    #write /sys/devices/system/cpu/cpufreq/ondemand/sampling_rate 50000
-    #write /sys/devices/system/cpu/cpufreq/ondemand/io_is_busy 1
-    #write /sys/devices/system/cpu/cpufreq/ondemand/sampling_down_factor 4
-    #write /sys/devices/system/cpu/cpufreq/ondemand/down_differential 10
-    #write /sys/devices/system/cpu/cpufreq/ondemand/up_threshold_multi_core 70
-    #write /sys/devices/system/cpu/cpufreq/ondemand/down_differential_multi_core 3
-    #write /sys/devices/system/cpu/cpufreq/ondemand/optimal_freq 960000
-    #write /sys/devices/system/cpu/cpufreq/ondemand/sync_freq 960000
-    #write /sys/devices/system/cpu/cpufreq/ondemand/up_threshold_any_cpu_load 80
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 300000
     write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 300000
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 300000
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 300000
     chown system /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
     chown system /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
-    #write /sys/module/msm_thermal/core_control/enabled 1
     chown root.system /sys/devices/system/cpu/mfreq
     chmod 220 /sys/devices/system/cpu/mfreq
     chown root.system /sys/devices/system/cpu/cpu1/online
@@ -216,7 +205,9 @@ on post-fs-data
     chown root.system /sys/devices/system/cpu/cpu3/online
     chmod 664 /sys/devices/system/cpu/cpu1/online
     chmod 664 /sys/devices/system/cpu/cpu2/online
-    chmod 664 /sys/devices/system/cpu/cpu3/online	
+    chmod 664 /sys/devices/system/cpu/cpu3/online
+
+	exec /system/bin/sh /init.fk.sh
 
     # Torch
     chown system camera /sys/class/leds/led:flash_torch/brightness
@@ -259,11 +250,6 @@ on property:sys.boot_completed=1
     write /sys/module/pm_8x60/modes/cpu1/retention/idle_enabled 1
     write /sys/module/pm_8x60/modes/cpu2/retention/idle_enabled 1
     write /sys/module/pm_8x60/modes/cpu3/retention/idle_enabled 1
-
-    stop thermal-engine
-    start fkbootscript
-    write /dev/cpuctl/apps/cpu.notify_on_migrate 1
-    #start mpdecision
 
     #enable slimport detection
     write /sys/module/slimport/parameters/enable_irq 1
@@ -409,10 +395,10 @@ service bugreport /system/bin/dumpstate -d -p -B \
     keycodes 114 115 116
 
 service mpdecision /system/bin/mpdecision --no_sleep --avg_comp
-   class main
-   user root
-   group root
-   disabled
+    class main
+    user root
+    group root
+    disabled
 
 service ssr_ramdump /system/bin/subsystem_ramdump -m -t emmc
     class main
@@ -421,9 +407,10 @@ service ssr_ramdump /system/bin/subsystem_ramdump -m -t emmc
     group root
 
 service thermal-engine /system/bin/thermal-engine-hh
-   class main
-   user root
-   group root
+    class main
+    user root
+    group root
+    disabled
 
 service vss_init /vendor/bin/vss_init
     class late_start
@@ -435,9 +422,3 @@ service time_daemon /system/bin/time_daemon
     class late_start
     user root
     group root
-
-service fkbootscript /sbin/fkbootscript.sh
-    class late_start
-	user root
-	disabled
-    oneshot
