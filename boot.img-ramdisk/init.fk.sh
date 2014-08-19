@@ -26,10 +26,16 @@ echo 0 > /proc/sys/vm/swappiness
 echo 50 > /proc/sys/vm/vfs_cache_pressure
 echo 1190400 > /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
 echo 1190400 > /sys/devices/system/cpu/cpufreq/interactive/up_threshold_any_cpu_freq
+
+#these get overwritten by CM's KSM settings, so let's wait 1 minute before we apply them 
+sleep 60
 echo 1 > /sys/kernel/mm/ksm/run
 echo 1 > /sys/kernel/mm/ksm/deferred_timer
 echo 512 > /sys/kernel/mm/ksm/pages_to_scan
 echo 2000 > /sys/kernel/mm/ksm/sleep_millisecs
+
+# activate msm_limiter. If the limiter isn't enabled in config, echo will fail, but we're safe
+echo 1 > /sys/kernel/msm_limiter/limiter_enabled
 
 # wait for systemui and increase its priority
 while sleep 1; do
