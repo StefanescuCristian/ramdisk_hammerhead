@@ -17,22 +17,12 @@ fi;
 
 mount -o ro,remount /system
 
-echo 85 1500000:90 1800000:70 > /sys/devices/system/cpu/cpufreq/interactive/target_loads
-echo 20000 1400000:40000 1700000:20000 > /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay
-echo 40000 1700000:80000 > /sys/devices/system/cpu/cpufreq/interactive/min_sample_time
-echo 60000 500000:40000 1500000:30000 2000000:20000 > /sys/devices/system/cpu/cpufreq/interactive/timer_rate
-echo -1 800000:30000 1100000:40000 1700000:20000 > /sys/devices/system/cpu/cpufreq/interactive/timer_slack
 echo 0 > /proc/sys/vm/swappiness
 echo 50 > /proc/sys/vm/vfs_cache_pressure
-echo 1190400 > /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
-echo 1190400 > /sys/devices/system/cpu/cpufreq/interactive/up_threshold_any_cpu_freq
 echo 1 > /sys/kernel/mm/ksm/run
 echo 1 > /sys/kernel/mm/ksm/deferred_timer
 echo 512 > /sys/kernel/mm/ksm/pages_to_scan
 echo 2000 > /sys/kernel/mm/ksm/sleep_millisecs
-
-# activate msm_limiter. If the limiter isn't enabled in config, echo will fail, but we're safe
-echo 1 > /sys/kernel/msm_limiter/limiter_enabled
 
 # wait for systemui and increase its priority
 while sleep 1; do
