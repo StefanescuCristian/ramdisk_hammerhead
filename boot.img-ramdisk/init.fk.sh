@@ -19,10 +19,6 @@ mount -o ro,remount /system
 
 echo 0 > /proc/sys/vm/swappiness
 echo 50 > /proc/sys/vm/vfs_cache_pressure
-echo 1 > /sys/kernel/mm/ksm/run
-echo 1 > /sys/kernel/mm/ksm/deferred_timer
-echo 512 > /sys/kernel/mm/ksm/pages_to_scan
-echo 2000 > /sys/kernel/mm/ksm/sleep_millisecs
 
 # wait for systemui and increase its priority
 while sleep 1; do
