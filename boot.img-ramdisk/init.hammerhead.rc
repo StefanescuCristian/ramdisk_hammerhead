@@ -204,14 +204,14 @@ on post-fs-data
     write /sys/devices/system/cpu/cpufreq/blu_active/timer_slack 20000
     write /sys/devices/system/cpu/cpufreq/blu_active/io_is_busy 1
     write /sys/devices/system/cpu/cpufreq/blu_active/target_loads "85 1500000:90 1800000:70"
-    write /sys/devices/system/cpu/cpufreq/blu_active/up_threshold_any_cpu_load 50
-    write /sys/devices/system/cpu/cpufreq/blu_active/sync_freq 1036800
-    write /sys/devices/system/cpu/cpufreq/blu_active/up_threshold_any_cpu_freq 1190400
+    #write /sys/devices/system/cpu/cpufreq/blu_active/up_threshold_any_cpu_load 50
+    #write /sys/devices/system/cpu/cpufreq/blu_active/sync_freq 1036800
+    #write /sys/devices/system/cpu/cpufreq/blu_active/up_threshold_any_cpu_freq 1190400
     write /sys/devices/system/cpu/cpufreq/blu_active/boostpulse_duration 0
 
     write /sys/module/cpu_boost/parameters/boost_ms 20
     write /sys/module/cpu_boost/parameters/sync_threshold 1728000
-    write /sys/module/cpu_boost/parameters/input_boost_freq 1497600
+    write /sys/module/cpu_boost/parameters/input_boost_freq 1190400
     write /sys/module/cpu_boost/parameters/input_boost_ms 40
 
     write /sys/module/blu_plug/parameters/down_timer_cnt 6
