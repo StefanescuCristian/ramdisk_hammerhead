@@ -17,9 +17,6 @@ fi;
 
 mount -o ro,remount /system
 
-echo 0 > /proc/sys/vm/swappiness
-echo 50 > /proc/sys/vm/vfs_cache_pressure
-
 echo 0 > /sys/block/mmcblk0/queue/nomerges
 echo 2 > /sys/block/mmcblk0/queue/rq_affinity
 echo 1 > /proc/sys/vm/laptop_mode
