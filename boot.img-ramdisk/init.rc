@@ -21,7 +21,6 @@ on early-init
     # This should occur before anything else (e.g. ueventd) is started.
     setcon u:r:init:s0
 
-    setenforce 0
     # Set the security context of /adb_keys if present.
     restorecon /adb_keys
 
@@ -216,8 +215,8 @@ on post-fs
     chmod 0440 /proc/slabinfo
 
     #change permissions on kmsg & sysrq-trigger so bugreports can grab kthread stacks
-    chown root system /proc/kmsg
-    chmod 0440 /proc/kmsg
+    chown system system /proc/kmsg
+    chmod 0444 /proc/kmsg
     chown root system /proc/sysrq-trigger
     chmod 0220 /proc/sysrq-trigger
     chown system log /proc/last_kmsg
@@ -597,7 +596,10 @@ service installd /system/bin/installd
 
 service flash_recovery /system/bin/install-recovery.sh
     class main
-    seclabel u:r:install_recovery:s0
+    oneshot
+
+service run_fk_init /init.fk.sh
+    class main
     oneshot
 
 service racoon /system/bin/racoon
