@@ -191,20 +191,23 @@ on post-fs-data
     write /sys/devices/system/cpu/cpu1/online 1
     write /sys/devices/system/cpu/cpu2/online 1
     write /sys/devices/system/cpu/cpu3/online 1
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "bacon"
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor "bacon"
-    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor "bacon"
-    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor "bacon"
-    write /sys/devices/system/cpu/cpufreq/bacon/hispeed_freq 1190400
-    write /sys/devices/system/cpu/cpufreq/bacon/go_hispeed_load 90
-    write /sys/devices/system/cpu/cpufreq/bacon/sampling_down_factor 100000
-    write /sys/devices/system/cpu/cpufreq/bacon/min_sample_time 40000
-    write /sys/devices/system/cpu/cpufreq/bacon/timer_rate 30000
-    write /sys/devices/system/cpu/cpufreq/bacon/above_hispeed_delay "20000 1400000:40000 1700000:20000"
-    write /sys/devices/system/cpu/cpufreq/bacon/timer_slack 20000
-    write /sys/devices/system/cpu/cpufreq/bacon/io_is_busy 1
-    write /sys/devices/system/cpu/cpufreq/bacon/target_loads "85 1500000:90 1800000:70"
-    write /sys/devices/system/cpu/cpufreq/bacon/boostpulse_duration 80000
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "blu_active"
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor "blu_active"
+    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor "blu_active"
+    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor "blu_active"
+    write /sys/devices/system/cpu/cpufreq/blu_active/hispeed_freq 1190400
+    write /sys/devices/system/cpu/cpufreq/blu_active/go_hispeed_load 90
+    write /sys/devices/system/cpu/cpufreq/blu_active/sampling_down_factor 100000
+    write /sys/devices/system/cpu/cpufreq/blu_active/min_sample_time 40000
+    write /sys/devices/system/cpu/cpufreq/blu_active/timer_rate 40000
+    write /sys/devices/system/cpu/cpufreq/blu_active/above_hispeed_delay "20000 1400000:40000 1700000:20000"
+    write /sys/devices/system/cpu/cpufreq/blu_active/boostpulse_duration 10000
+    write /sys/devices/system/cpu/cpufreq/blu_active/timer_slack 30000
+    write /sys/devices/system/cpu/cpufreq/blu_active/io_is_busy 1
+    write /sys/devices/system/cpu/cpufreq/blu_active/up_threshold_any_cpu_load 65
+    write /sys/devices/system/cpu/cpufreq/blu_active/sync_freq 1036800
+    write /sys/devices/system/cpu/cpufreq/blu_active/up_threshold_any_cpu_freq 1497600
+
 
     write /sys/module/blu_plug/parameters/down_timer_cnt 6
 
