@@ -203,6 +203,7 @@ on post-fs-data
     chmod 664 /sys/devices/system/cpu/cpu2/online
     chmod 664 /sys/devices/system/cpu/cpu3/online
     write /dev/cpuctl/apps/cpu.notify_on_migrate 1
+    start mpdecision    
 
 on charger
     # Booting modem
@@ -239,6 +240,7 @@ on property:sys.boot_completed=1
     write /sys/module/pm_8x60/modes/cpu1/retention/idle_enabled 1
     write /sys/module/pm_8x60/modes/cpu2/retention/idle_enabled 1
     write /sys/module/pm_8x60/modes/cpu3/retention/idle_enabled 1
+    start mpdecision
 
     # enable slimport detection
     write /sys/module/slimport/parameters/enable_irq 1
