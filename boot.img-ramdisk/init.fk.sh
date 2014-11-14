@@ -1,8 +1,7 @@
 #!/system/bin/sh
 echo MAIGODE ITS RUNNING #that's what she said
 echo script_open >> /data/fk-log.txt
-mount -o rw,remount /system
-echo remount >> /data/fk-log.txt
+mount -o rw,remount /system && echo remount >> /data/fk-log.txt
 #mv /system/etc/sysctl.conf /system/etc/sysctl.conf.fkbak
 #mv /system/lib/hw/power.msm8974.so /system/lib/hw/power.msm8974.so.bak
 #mv /system/bin/thermal-engine-hh /system/bin/thermal-engine-hh-bak
@@ -13,5 +12,10 @@ chown -R root.root /system/etc/init.d
 chmod -R 755 /system/etc/init.d
 fi;
 
-mount -o ro,remount /system
-echo remount_ro >> /data/fk-log.txt
+mount -o ro,remount /system && echo remount_ro >> /data/fk-log.txt
+
+#enable ksm
+echo 1 > /sys/kernel/mm/ksm/deferred_timer
+echo 1 > /sys/kernel/mm/ksm/run
+echo 256 > /sys/kernel/mm/ksm/pages_to_scan
+echo 2000 > /sys/kernel/mm/ksm/sleep_millisecs
