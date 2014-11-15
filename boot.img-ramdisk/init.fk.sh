@@ -19,3 +19,8 @@ echo 1 > /sys/kernel/mm/ksm/deferred_timer
 echo 1 > /sys/kernel/mm/ksm/run
 echo 256 > /sys/kernel/mm/ksm/pages_to_scan
 echo 2000 > /sys/kernel/mm/ksm/sleep_millisecs
+
+#io tuning
+echo 0 > /sys/block/mmcblk0/queue/nomerges
+echo 2 > /sys/block/mmcblk0/queue/rq_affinity
+echo 1 > /proc/sys/vm/laptop_mode
