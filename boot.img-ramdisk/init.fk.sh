@@ -24,3 +24,6 @@ echo 2000 > /sys/kernel/mm/ksm/sleep_millisecs
 echo 0 > /sys/block/mmcblk0/queue/nomerges
 echo 2 > /sys/block/mmcblk0/queue/rq_affinity
 echo 1 > /proc/sys/vm/laptop_mode
+
+#gpu tune
+echo "simple" > /sys/class/kgsl/kgsl-3d0/pwrscale/trustzone/governor
