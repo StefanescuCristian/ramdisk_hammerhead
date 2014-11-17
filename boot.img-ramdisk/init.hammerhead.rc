@@ -262,7 +262,7 @@ on property:init.svc.bootanim=stopped
     write /sys/devices/system/cpu/cpufreq/bacon/boostpulse_duration 0
 
 on property:ro.debuggable=1
-    start ssr_ramdump
+    #start ssr_ramdump
 
 service rmt_storage /system/bin/rmt_storage
     class core
