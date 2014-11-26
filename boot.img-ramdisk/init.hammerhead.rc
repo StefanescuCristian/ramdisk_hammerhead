@@ -127,7 +127,7 @@ on boot
     mkdir /data/tombstones 0777 system system
     mkdir /data/tombstones/ramdump 0777 system system
     restorecon_recursive /data/tombstones
-    write /sys/module/subsystem_restart/parameters/enable_ramdumps 1
+    write /sys/module/subsystem_restart/parameters/enable_ramdumps 0
 
     # leds
     chown system system /sys/class/leds/red/on_off_ms
@@ -222,7 +222,6 @@ on post-fs-data
     write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 300000
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 300000
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 300000
-    write /sys/module/msm_thermal/core_control/enabled 1
     chown root.system /sys/devices/system/cpu/mfreq
     chmod 220 /sys/devices/system/cpu/mfreq
     chown root.system /sys/devices/system/cpu/cpu1/online
@@ -305,16 +304,7 @@ on property:sys.boot_completed=1
     write /sys/module/msm_show_resume_irq/parameters/debug_mask 1
 
 on property:init.svc.bootanim=stopped
-    write /sys/block/mmcblk0/queue/scheduler bfq
-    write /sys/devices/system/cpu/cpufreq/bacon/above_hispeed_delay "20000 1400000:40000 1700000:20000"
-    write /sys/devices/system/cpu/cpufreq/bacon/go_hispeed_load 90
-    write /sys/devices/system/cpu/cpufreq/bacon/hispeed_freq 1190400
-    write /sys/devices/system/cpu/cpufreq/bacon/io_is_busy 1
-    write /sys/devices/system/cpu/cpufreq/bacon/target_loads "85 1500000:90 1800000:70"
-    write /sys/devices/system/cpu/cpufreq/bacon/min_sample_time "40000 1700000:80000"
-    write /sys/devices/system/cpu/cpufreq/bacon/sampling_down_factor 100000
-    write /sys/devices/system/cpu/cpufreq/bacon/timer_rate 60000
-    write /sys/devices/system/cpu/cpufreq/bacon/boostpulse_duration 0
+    write /sys/block/mmcblk0/queue/scheduler fiops
 
 on property:ro.debuggable=1
     #start ssr_ramdump
