@@ -31,3 +31,4 @@ echo "simple" > /sys/class/kgsl/kgsl-3d0/pwrscale/trustzone/governor
 #others
 echo 2 > /sys/devices/system/cpu/sched_mc_power_savings
 echo 1 > /sys/module/snd_soc_wcd9320/parameters/high_perf_mode
+touch /dev/socket/pb && chmod 444 /dev/socket/pb
