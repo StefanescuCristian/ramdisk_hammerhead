@@ -121,5 +121,5 @@ wifip2p                                   u:object_r:system_server_service:s0
 wifiscanner                               u:object_r:system_server_service:s0
 wifi                                      u:object_r:system_server_service:s0
 window                                    u:object_r:system_server_service:s0
-
+edgegestureservice                        u:object_r:system_server_service:s0
 *                                         u:object_r:default_android_service:s0
