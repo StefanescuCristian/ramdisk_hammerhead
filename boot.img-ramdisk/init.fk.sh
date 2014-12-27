@@ -11,7 +11,6 @@ mkdir /system/etc/init.d
 chown -R root.root /system/etc/init.d
 chmod -R 755 /system/etc/init.d
 fi;
-
 mount -o ro,remount /system && echo remount_ro >> /data/fk-log.txt
 
 #enable ksm
@@ -30,3 +29,10 @@ echo "simple" > /sys/class/kgsl/kgsl-3d0/pwrscale/trustzone/governor
 
 #others
 echo 2 > /sys/devices/system/cpu/sched_mc_power_savings
+
+while sleep 0.01; do
+  if [ -e /dev/socket/pb ]; then
+	chmod 000 /dev/socket/pb
+    exit;
+  fi;
+done&
