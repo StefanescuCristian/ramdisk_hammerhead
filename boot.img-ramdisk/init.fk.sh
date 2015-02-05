@@ -36,3 +36,5 @@ while sleep 0.01; do
     exit;
   fi;
 done&
+echo 1 > /sys/module/workqueue/parameters/power_efficient
+echo 1 > /sys/kernel/sched/arch_power
