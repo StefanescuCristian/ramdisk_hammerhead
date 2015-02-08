@@ -221,7 +221,6 @@ on post-fs-data
     write /sys/devices/system/cpu/cpufreq/impulse/max_freq_hysteresis 100000
     write /sys/devices/system/cpu/cpufreq/impulse/timer_slack 30000
     write /sys/devices/system/cpu/cpufreq/impulse/go_lowspeed_load 0
-    write /sys/devices/system/cpu/cpufreq/impulse/boostpulse_duration 0
 
     # cpu-boost
     write /sys/module/cpu_boost/parameters/sync_threshold 1728000
