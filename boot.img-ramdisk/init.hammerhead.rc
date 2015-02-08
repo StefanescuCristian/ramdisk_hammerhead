@@ -224,9 +224,11 @@ on post-fs-data
 
     # cpu-boost
     write /sys/module/cpu_boost/parameters/sync_threshold 1728000
-    write /sys/module/cpu_boost/parameters/boost_ms 0
-    write /sys/module/cpu_boost/parameters/input_boost_freq 1190400
-    write /sys/module/cpu_boost/parameters/input_boost_ms 250
+    write /sys/module/cpu_boost/parameters/boost_ms 20
+    write /sys/module/cpu_boost/parameters/input_boost_freq 1267200
+    write /sys/module/cpu_boost/parameters/input_boost_ms 150
+    write /sys/module/cpu_boost/parameters/load_based_syncs 1
+    write /sys/module/cpu_boost/parameters/migration_load_threshold 30
 
 
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 300000
