@@ -240,6 +240,7 @@
 /sys/power/wake_unlock -- u:object_r:sysfs_wake_lock:s0
 /sys/kernel/uevent_helper --	u:object_r:usermodehelper:s0
 /sys/module/lowmemorykiller(/.*)? -- u:object_r:sysfs_lowmemorykiller:s0
+/sys/devices/platform/kcal_ctrl.0/kcal -- u:object_r:sysfs_kcal:s0
 
 #############################
 # asec containers
@@ -365,7 +366,6 @@
 /system/bin/mm-qcamera-daemon      u:object_r:camera_exec:s0
 /system/bin/qseecomd               u:object_r:tee_exec:s0
 /system/bin/subsystem_ramdump      u:object_r:ssr_exec:s0
-/system/bin/thermal-engine-hh      u:object_r:thermald_exec:s0
 /system/vendor/bin/vss_init        u:object_r:vss_exec:s0
 /system/bin/time_daemon            u:object_r:time_exec:s0
 /system/bin/irsc_util              u:object_r:irsc_util_exec:s0
