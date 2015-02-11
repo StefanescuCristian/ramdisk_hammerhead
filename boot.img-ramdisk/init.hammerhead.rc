@@ -217,7 +217,7 @@ on post-fs-data
     write /sys/devices/system/cpu/cpufreq/impulse/io_is_busy 1
     write /sys/devices/system/cpu/cpufreq/impulse/target_loads "85 1500000:90 1800000:70"
     write /sys/devices/system/cpu/cpufreq/impulse/min_sample_time 40000
-    write /sys/devices/system/cpu/cpufreq/impulse/timer_rate 40000
+    write /sys/devices/system/cpu/cpufreq/impulse/timer_rate 30000
     write /sys/devices/system/cpu/cpufreq/impulse/max_freq_hysteresis 100000
     write /sys/devices/system/cpu/cpufreq/impulse/timer_slack 30000
     write /sys/devices/system/cpu/cpufreq/impulse/go_lowspeed_load 0
