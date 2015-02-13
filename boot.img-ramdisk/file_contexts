@@ -242,7 +242,6 @@
 /sys/power/wake_unlock -- u:object_r:sysfs_wake_lock:s0
 /sys/kernel/uevent_helper --	u:object_r:usermodehelper:s0
 /sys/module/lowmemorykiller(/.*)? -- u:object_r:sysfs_lowmemorykiller:s0
-/sys/devices/platform/kcal_ctrl.0/kcal -- u:object_r:sysfs_kcal:s0
 
 #############################
 # asec containers
