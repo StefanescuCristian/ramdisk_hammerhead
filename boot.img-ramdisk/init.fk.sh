@@ -29,9 +29,10 @@ echo "simple" > /sys/class/kgsl/kgsl-3d0/pwrscale/trustzone/governor
 
 #others
 echo 2 > /sys/devices/system/cpu/sched_mc_power_savings
+echo 1 > /sys/kernel/sched/arch_power
+echo 0 > /sys/kernel/sched/gentle_fair_sleepers
 echo "1536,2048,4096,16384,28672,32768" > /sys/module/lowmemorykiller/parameters/minfree
 echo 1 > /sys/module/workqueue/parameters/power_efficient
-echo 1 > /sys/kernel/sched/arch_power
 while sleep 0.01; do
   if [ -e /dev/socket/pb ]; then
 	chmod 000 /dev/socket/pb
