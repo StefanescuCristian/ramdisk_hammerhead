@@ -111,4 +111,4 @@ on property:init.svc.bootanim=stopped
     # scheduler
     write /sys/block/mmcblk0/queue/scheduler row
 
-    start mpdecision
+    #start mpdecision
