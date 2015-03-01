@@ -109,6 +109,6 @@ on property:init.svc.bootanim=stopped
     write /sys/module/cpu_boost/parameters/hotplug_boost 0
 
     # scheduler
-    write /sys/block/mmcblk0/queue/scheduler row
+    write /sys/block/mmcblk0/queue/scheduler fiops
 
     #start mpdecision
