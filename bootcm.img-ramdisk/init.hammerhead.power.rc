@@ -34,6 +34,7 @@ on early-init
     write /sys/block/mmcblk0/bdi/read_ahead_kb 512
     write /sys/block/mmcblk0/queue/nomerges 0
     write /sys/block/mmcblk0/queue/rq_affinity 2
+    write /sys/block/mmcblk0/queue/add_random 0
 
 on property:service.bootanim.exit=1
     # Enable Power modes
@@ -114,3 +115,5 @@ on property:init.svc.bootanim=stopped
     write /sys/block/mmcblk0/queue/scheduler fiops
 
     #start mpdecision
+
+    write /sys/devices/system/cpu/sched_mc_power_savings 2
