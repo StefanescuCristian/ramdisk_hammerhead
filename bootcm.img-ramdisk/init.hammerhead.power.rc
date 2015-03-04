@@ -121,3 +121,7 @@ on property:init.svc.bootanim=stopped
     write /sys/module/msm_hotplug/down_lock_duration 500
     write /sys/module/msm_hotplug/fast_lane_load 198
     write /sys/module/msm_hotplug/history_size 20
+
+    # we've set msm_hotplug to mostly use 2 cores
+    # so group tasks in least possible cores too
+    write /sys/devices/system/cpu/sched_mc_power_savings 2
