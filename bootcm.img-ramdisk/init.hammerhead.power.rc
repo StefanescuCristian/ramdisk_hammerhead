@@ -125,3 +125,6 @@ on property:init.svc.bootanim=stopped
     # we've set msm_hotplug to mostly use 2 cores
     # so group tasks in least possible cores too
     write /sys/devices/system/cpu/sched_mc_power_savings 2
+
+    # power efficient wq after boot
+    write /sys/module/workqueue/parameters/power_efficient 1
