@@ -231,10 +231,15 @@ on post-fs-data
     write /sys/module/cpu_boost/parameters/migration_load_threshold 30
     write /sys/module/cpu_boost/parameters/hotplug_boost 0
 
+    #tune msm_hotplug
+    write /sys/module/msm_hotplug/boost_lock_duration 350
+    write /sys/module/msm_hotplug/down_lock_duration 500
+    write /sys/module/msm_hotplug/fast_lane_load 198
+    write /sys/module/msm_hotplug/history_size 20
 
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 300000
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 300000
-    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 300000
+    write isys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 300000
+    write isys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 300000
+    write isys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 300000
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 300000
     chown root.system /sys/devices/system/cpu/mfreq
     chmod 220 /sys/devices/system/cpu/mfreq
@@ -281,7 +286,7 @@ on charger
     write /sys/devices/system/cpu/cpu1/online 0
     write /sys/devices/system/cpu/cpu2/online 0
     write /sys/devices/system/cpu/cpu3/online 0
-    start mpdecision
+    #start mpdecision
 
 on property:init.svc.wpa_supplicant=stopped
     stop dhcpcd
@@ -309,7 +314,8 @@ on property:sys.boot_completed=1
     write /sys/module/pm_8x60/modes/cpu1/retention/idle_enabled 1
     write /sys/module/pm_8x60/modes/cpu2/retention/idle_enabled 1
     write /sys/module/pm_8x60/modes/cpu3/retention/idle_enabled 1
-    start mpdecision
+    #start mpdecision
+
 
     # enable slimport detection
     write /sys/module/slimport/parameters/enable_irq 1
