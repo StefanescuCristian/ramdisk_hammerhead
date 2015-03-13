@@ -94,7 +94,7 @@ on property:init.svc.bootanim=stopped
     write /sys/devices/system/cpu/cpufreq/impulse/go_hispeed_load 0
     write /sys/devices/system/cpu/cpufreq/impulse/go_lowspeed_load 0
     write /sys/devices/system/cpu/cpufreq/impulse/hispeed_freq 1190400
-    write /sys/devices/system/cpu/cpufreq/impulse/io_is_busy 1
+    write /sys/devices/system/cpu/cpufreq/impulse/io_is_busy 0
     write /sys/devices/system/cpu/cpufreq/impulse/target_loads "85 1500000:90 1800000:70"
     write /sys/devices/system/cpu/cpufreq/impulse/min_sample_time 40000
     write /sys/devices/system/cpu/cpufreq/impulse/timer_rate 30000
