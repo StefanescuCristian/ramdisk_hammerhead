@@ -184,6 +184,7 @@
 /data/resource-cache(/.*)? u:object_r:resourcecache_data_file:s0
 /data/dalvik-cache(/.*)? u:object_r:dalvikcache_data_file:s0
 /data/dalvik-cache/profiles(/.*)? u:object_r:dalvikcache_profiles_data_file:s0
+/data/adb(/.*)?		u:object_r:adb_data_file:s0
 /data/anr(/.*)?		u:object_r:anr_data_file:s0
 /data/app(/.*)?                       u:object_r:apk_data_file:s0
 /data/app/vmdl.*\.tmp(/.*)?           u:object_r:apk_tmp_file:s0
@@ -219,6 +220,9 @@
 /data/misc/wifi/hostapd(/.*)?   u:object_r:wpa_socket:s0
 /data/misc/zoneinfo(/.*)?       u:object_r:zoneinfo_data_file:s0
 
+# coredump directory for userdebug/eng devices
+/cores(/.*)?                    u:object_r:coredump_file:s0
+
 # Wallpaper file for other users
 /data/system/users/[0-9]+/wallpaper		u:object_r:wallpaper_file:s0
 #############################
@@ -242,7 +246,6 @@
 /sys/power/wake_unlock -- u:object_r:sysfs_wake_lock:s0
 /sys/kernel/uevent_helper --	u:object_r:usermodehelper:s0
 /sys/module/lowmemorykiller(/.*)? -- u:object_r:sysfs_lowmemorykiller:s0
-/sys/devices/platform/kcal_ctrl.0/kcal -- u:object_r:sysfs_kcal:s0
 
 #############################
 # asec containers
@@ -404,35 +407,3 @@
 
 # Thermal engine
 /dev/msm_thermal_query            u:object_r:thermal_engine_device:s0
-#line 1 "vendor/cm/sepolicy/file_contexts"
-/cache/dalvik-cache(/.*)? u:object_r:dalvikcache_data_file:s0
-
-# Auditd is a logging daemon. Put it into logd's context
-/system/bin/auditd        u:object_r:logd_exec:s0
-/data/misc/audit(/.*)?    u:object_r:auditd_log:s0
-
-/system/bin/sysinit       u:object_r:sysinit_exec:s0
-
-# For minivold in recovery
-/sbin/minivold            u:object_r:vold_exec:s0
-
-#############################
-# performance-related sysfs files (CM)
-/sys/kernel/mm/ksm(/.*)?       --          u:object_r:sysfs_writable:s0
-/sys/devices/system/cpu.*/cpufreq(/.*)? --  u:object_r:sysfs_devices_system_cpu:s0
-/sys/block/mmcblk0/queue/scheduler  --    u:object_r:sysfs_writable:s0
-
-/data/hostapd(/.*)?         u:object_r:wifi_data_file:s0
-/data/misc/radio(/.*)?      u:object_r:radio_data_file:s0
-
-#############
-# Superuser's control sockets
-/dev/com.android.settings.daemon(/.*)?   u:object_r:superuser_device:s0
-/dev/com.android.settings(/.*)?   u:object_r:superuser_device:s0
-
-# Expansion of these hooks is a bit unconventional
-/cache/com.cyanogenmod.keyhandler.dex   u:object_r:dalvikcache_data_file:s0
-
-# Lockscreen wallpaper
-/data/system/users/[0-9]+/keyguard_wallpaper   u:object_r:wallpaper_file:s0
-

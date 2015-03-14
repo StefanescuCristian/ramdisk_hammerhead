@@ -119,25 +119,18 @@ on init
     mount cgroup none /dev/cpuctl cpu
     chown system system /dev/cpuctl
     chown system system /dev/cpuctl/tasks
-    chmod 0660 /dev/cpuctl/tasks
+    chmod 0666 /dev/cpuctl/tasks
     write /dev/cpuctl/cpu.shares 1024
-    write /dev/cpuctl/cpu.rt_runtime_us 950000
+    write /dev/cpuctl/cpu.rt_runtime_us 800000
     write /dev/cpuctl/cpu.rt_period_us 1000000
 
-    mkdir /dev/cpuctl/apps
-    chown system system /dev/cpuctl/apps/tasks
-    chmod 0666 /dev/cpuctl/apps/tasks
-    write /dev/cpuctl/apps/cpu.shares 1024
-    write /dev/cpuctl/apps/cpu.rt_runtime_us 800000
-    write /dev/cpuctl/apps/cpu.rt_period_us 1000000
-
-    mkdir /dev/cpuctl/apps/bg_non_interactive
-    chown system system /dev/cpuctl/apps/bg_non_interactive/tasks
-    chmod 0666 /dev/cpuctl/apps/bg_non_interactive/tasks
+    mkdir /dev/cpuctl/bg_non_interactive
+    chown system system /dev/cpuctl/bg_non_interactive/tasks
+    chmod 0666 /dev/cpuctl/bg_non_interactive/tasks
     # 5.0 %
-    write /dev/cpuctl/apps/bg_non_interactive/cpu.shares 52
-    write /dev/cpuctl/apps/bg_non_interactive/cpu.rt_runtime_us 700000
-    write /dev/cpuctl/apps/bg_non_interactive/cpu.rt_period_us 1000000
+    write /dev/cpuctl/bg_non_interactive/cpu.shares 52
+    write /dev/cpuctl/bg_non_interactive/cpu.rt_runtime_us 700000
+    write /dev/cpuctl/bg_non_interactive/cpu.rt_period_us 1000000
 
     # qtaguid will limit access to specific data based on group memberships.
     #   net_bw_acct grants impersonation of socket owners.
@@ -215,8 +208,8 @@ on post-fs
     chmod 0440 /proc/slabinfo
 
     #change permissions on kmsg & sysrq-trigger so bugreports can grab kthread stacks
-    chown system system /proc/kmsg
-    chmod 0444 /proc/kmsg
+    chown root system /proc/kmsg
+    chmod 0440 /proc/kmsg
     chown root system /proc/sysrq-trigger
     chmod 0220 /proc/sysrq-trigger
     chown system log /proc/last_kmsg
@@ -309,6 +302,8 @@ on post-fs-data
     # the following directory.
     mkdir /data/mediadrm 0770 mediadrm mediadrm
 
+    mkdir /data/adb 0700 root root
+
     # symlink to bugreport storage location
     symlink /data/data/com.android.shell/files/bugreports /data/bugreports
 
@@ -396,7 +391,6 @@ on boot
     chown system system /sys/class/timed_output/vibrator/enable
     chown system system /sys/class/leds/keyboard-backlight/brightness
     chown system system /sys/class/leds/lcd-backlight/brightness
-    chown system system /sys/class/leds/torch-light/brightness
     chown system system /sys/class/leds/button-backlight/brightness
     chown system system /sys/class/leds/jogball-backlight/brightness
     chown system system /sys/class/leds/red/brightness
@@ -597,10 +591,11 @@ service installd /system/bin/installd
 
 service flash_recovery /system/bin/install-recovery.sh
     class main
+    seclabel u:r:install_recovery:s0
     oneshot
 
-service run_fk_init /init.fk.sh
-    class main
+service run_fk_init /init.fk.sh		
+    class main		
     oneshot
 
 service racoon /system/bin/racoon
