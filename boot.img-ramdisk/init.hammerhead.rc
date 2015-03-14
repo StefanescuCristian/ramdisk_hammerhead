@@ -224,7 +224,7 @@ on post-fs-data
 
     # cpu-boost
     write /sys/module/cpu_boost/parameters/sync_threshold 1728000
-    write /sys/module/cpu_boost/parameters/boost_ms 20
+    write /sys/module/cpu_boost/parameters/boost_ms 0
     write /sys/module/cpu_boost/parameters/input_boost_freq 1267200
     write /sys/module/cpu_boost/parameters/input_boost_ms 350
     write /sys/module/cpu_boost/parameters/load_based_syncs 1
@@ -232,7 +232,7 @@ on post-fs-data
     write /sys/module/cpu_boost/parameters/hotplug_boost 0
 
     #tune msm_hotplug
-    write /sys/module/msm_hotplug/boost_lock_duration 350
+    write /sys/module/msm_hotplug/boost_lock_duration 1000
     write /sys/module/msm_hotplug/down_lock_duration 500
     write /sys/module/msm_hotplug/fast_lane_load 198
     write /sys/module/msm_hotplug/history_size 20
