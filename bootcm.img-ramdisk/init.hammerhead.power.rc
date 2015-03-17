@@ -32,7 +32,7 @@ on boot
 
 on early-init
     write /sys/block/mmcblk0/queue/nomerges 0
-    write /sys/block/mmcblk0/queue/rq_affinity 2
+    write /sys/block/mmcblk0/queue/rq_affinity 1
     write /sys/block/mmcblk0/queue/add_random 0
 
 on property:service.bootanim.exit=1
@@ -117,6 +117,8 @@ on property:init.svc.bootanim=stopped
     write /sys/module/msm_hotplug/down_lock_duration 350
     write /sys/module/msm_hotplug/fast_lane_load 201
     write /sys/module/msm_hotplug/history_size 20
+    write /sys/module/msm_hotplug/min_cpus_online 2
+    write /sys/module/msm_hotplug/max_cpus_online_susp 2
 
     # we've set msm_hotplug to mostly use 2 cores
     # so group tasks in least possible cores too
