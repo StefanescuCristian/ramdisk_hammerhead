@@ -113,7 +113,7 @@ on property:init.svc.bootanim=stopped
     #start mpdecision
 
     # msm_hotplug aka be more lazier in onlining cpus
-    write /sys/module/msm_hotplug/boost_lock_duration 500
+    write /sys/module/msm_hotplug/boost_lock_duration 350
     write /sys/module/msm_hotplug/down_lock_duration 350
     write /sys/module/msm_hotplug/fast_lane_load 201
     write /sys/module/msm_hotplug/history_size 20
