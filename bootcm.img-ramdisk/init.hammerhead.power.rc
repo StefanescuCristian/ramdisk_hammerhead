@@ -100,7 +100,7 @@ on property:init.svc.bootanim=stopped
 
 
     # msm_hotplug tune
-    write /sys/module/msm_hotplug/history_size 20
+    write /sys/module/msm_hotplug/history_size 10
     write /sys/module/msm_hotplug/min_cpus_online 2
     write /sys/module/msm_hotplug/max_cpus_online_susp 2
 
