@@ -138,7 +138,7 @@ on property:sys.perf.profile=1
     write /sys/module/msm_hotplug/boost_lock_duration 350
     write /sys/module/msm_hotplug/down_lock_duration 350
     write /sys/module/msm_hotplug/update_rates "200 5:100 50:50 350:200"
-    write /sys/module/msm_hotplug/fast_lane_load 180
+    write /sys/module/msm_hotplug/fast_lane_load 100
 
     # impulse
     write /sys/devices/system/cpu/cpufreq/impulse/go_lowspeed_load 0
@@ -148,7 +148,7 @@ on property:sys.perf.profile=1
     # cpu-boost
     write /sys/module/cpu_boost/parameters/boost_ms 0
     write /sys/module/cpu_boost/parameters/sync_threshold 0
-    write /sys/module/cpu_boost/parameters/input_boost_freq 1267200
+    write /sys/module/cpu_boost/parameters/input_boost_freq 1190400 
     write /sys/module/cpu_boost/parameters/input_boost_ms 350
     write /sys/module/cpu_boost/parameters/load_based_syncs 1
     write /sys/module/cpu_boost/parameters/migration_load_threshold 40
