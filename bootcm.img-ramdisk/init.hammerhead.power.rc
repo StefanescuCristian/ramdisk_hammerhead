@@ -130,7 +130,7 @@ on property:sys.perf.profile=0
 
 # Balanced
 on property:sys.perf.profile=1
-    write /sys/class/devfreq/qcom,cpubw.41/governor "msm_cpufreq"
+    write /sys/class/devfreq/qcom,cpubw.41/governor "cpubw_hwmon"
     write /sys/class/kgsl/kgsl-3d0/devfreq/governor "msm-adreno-tz"
     write /sys/module/workqueue/parameters/power_efficient 1
     write /sys/devices/system/cpu/sched_mc_power_savings 2
