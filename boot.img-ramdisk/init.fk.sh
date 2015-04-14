@@ -23,9 +23,9 @@ echo "simple" > /sys/class/kgsl/kgsl-3d0/pwrscale/trustzone/governor
 
 #others
 echo 2 > /sys/devices/system/cpu/sched_mc_power_savings
-echo 0 > /sys/kernel/sched/gentle_fair_sleepers
 echo "1536,2048,4096,16384,28672,32768" > /sys/module/lowmemorykiller/parameters/minfree
 echo 1 > /sys/module/workqueue/parameters/power_efficient
+echo 0 > /sys/kernel/dyn_fsync/Dyn_fsync_active
 
 #color
 echo 260 > /sys/devices/platform/kcal_ctrl.0/kcal_cont
