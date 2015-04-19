@@ -139,12 +139,12 @@ on property:sys.perf.profile=1
     write /sys/module/msm_hotplug/down_lock_duration 350
     write /sys/module/msm_hotplug/update_rates "200 5:100 50:50 350:200"
     write /sys/module/msm_hotplug/fast_lane_load 100
-    write /sys/module/msm_hotplug/history_size 20
+    write /sys/module/msm_hotplug/history_size 10
 
     # impulse
     write /sys/devices/system/cpu/cpufreq/impulse/go_lowspeed_load 0
     write /sys/devices/system/cpu/cpufreq/impulse/go_hispeed_load 0
-    write /sys/devices/system/cpu/cpufreq/impulse/io_is_busy 0
+    write /sys/devices/system/cpu/cpufreq/impulse/io_is_busy 1
 
     # cpu-boost
     write /sys/module/cpu_boost/parameters/boost_ms 0
