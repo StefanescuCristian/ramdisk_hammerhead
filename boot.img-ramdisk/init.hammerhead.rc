@@ -21,19 +21,20 @@ import init.hammerhead.diag.rc
 on early-init
     mount debugfs debugfs /sys/kernel/debug
     chown system system /sys/kernel/debug/kgsl/proc
-    write /sys/block/mmcblk0/queue/scheduler noop
+    write /sys/block/mmcblk0/bdi/read_ahead_kb 512
 
 on init
     # See storage config details at http://source.android.com/tech/storage/
     chmod 0701 /mnt/media_rw
-    mkdir /mnt/media_rw/usbdisk 0700 media_rw media_rw
     mkdir /mnt/shell/emulated 0700 shell shell
     mkdir /storage/emulated 0555 root root
+
+    mkdir /mnt/media_rw/usbdisk 0700 media_rw media_rw
+    mkdir /storage/usbdisk 0700 root root
 
     # Set permissions for persist partition
     mkdir /persist 0771 system system
     mkdir /firmware 0771 system system
-    mkdir /storage/usbdisk 0700 root root
 
     export EXTERNAL_STORAGE /storage/emulated/legacy
     export EMULATED_STORAGE_SOURCE /mnt/shell/emulated
@@ -68,8 +69,8 @@ on boot
     chown bluetooth net_bt_stack /proc/bluetooth/sleep/btwrite
 
     # bluetooth UART dev
-    chown bluetooth net_bt_stack /sys/devices/platform/msm_serial_hs.0/clock
-    chmod 0660 /sys/devices/platform/msm_serial_hs.0/clock
+    chown bluetooth net_bt_stack /sys/devices/f9960000.uart/clock
+    chmod 0660 /sys/devices/f9960000.uart/clock
 
     #Create QMUX deamon socket area
     mkdir /dev/socket/qmux_radio 0770 radio radio
@@ -130,7 +131,7 @@ on boot
     mkdir /data/tombstones 0777 system system
     mkdir /data/tombstones/ramdump 0777 system system
     restorecon_recursive /data/tombstones
-    write /sys/module/subsystem_restart/parameters/enable_ramdumps 0
+    write /sys/module/subsystem_restart/parameters/enable_ramdumps 1
 
     # leds
     chown system system /sys/class/leds/red/on_off_ms
@@ -182,14 +183,12 @@ on post-fs-data
     mkdir /data/misc/radio 0770 radio radio
     symlink /system/etc/qcril.db /data/misc/radio/qcril.db
 
-    setprop vold.post_fs_data_done 1
-
     # Set the CPU Freq Sampling rates
     write /sys/module/msm_thermal/core_control/enabled 0
     write /sys/devices/system/cpu/cpu1/online 1
     write /sys/devices/system/cpu/cpu2/online 1
     write /sys/devices/system/cpu/cpu3/online 1
-    
+
     # ondemand
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "ondemand"
     write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor "ondemand"
@@ -207,50 +206,67 @@ on post-fs-data
     write /sys/devices/system/cpu/cpufreq/ondemand/up_threshold_any_cpu_load 85
 
     # interactive
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "impulse"
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor "impulse"
-    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor "impulse"
-    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor "impulse"
-    write /sys/devices/system/cpu/cpufreq/impulse/above_hispeed_delay "20000 1400000:40000 1700000:20000"
-    write /sys/devices/system/cpu/cpufreq/impulse/go_hispeed_load 0
-    write /sys/devices/system/cpu/cpufreq/impulse/hispeed_freq 1190400
-    write /sys/devices/system/cpu/cpufreq/impulse/io_is_busy 1
-    write /sys/devices/system/cpu/cpufreq/impulse/target_loads "85 1500000:90 1800000:70"
-    write /sys/devices/system/cpu/cpufreq/impulse/min_sample_time 40000
-    write /sys/devices/system/cpu/cpufreq/impulse/timer_rate 40000
-    write /sys/devices/system/cpu/cpufreq/impulse/max_freq_hysteresis 100000
-    write /sys/devices/system/cpu/cpufreq/impulse/timer_slack 30000
-    write /sys/devices/system/cpu/cpufreq/impulse/go_lowspeed_load 0
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "interactive"
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor "interactive"
+    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor "interactive"
+    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor "interactive"
+    write /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay "20000 1400000:40000 1700000:20000"
+    write /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load 90
+    write /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq 1190400
+    write /sys/devices/system/cpu/cpufreq/interactive/io_is_busy 1
+    write /sys/devices/system/cpu/cpufreq/interactive/target_loads "85 1500000:90 1800000:70"
+    write /sys/devices/system/cpu/cpufreq/interactive/min_sample_time 40000
+    write /sys/devices/system/cpu/cpufreq/interactive/timer_rate 30000
+    write /sys/devices/system/cpu/cpufreq/interactive/max_freq_hysteresis 100000
+    write /sys/devices/system/cpu/cpufreq/interactive/timer_slack 30000
 
     # cpu-boost
+    # write /sys/module/cpu_boost/parameters/boost_ms 20
     write /sys/module/cpu_boost/parameters/sync_threshold 1728000
-    write /sys/module/cpu_boost/parameters/boost_ms 0
-    write /sys/module/cpu_boost/parameters/input_boost_freq 1267200
+    write /sys/module/cpu_boost/parameters/input_boost_freq 1190400
     write /sys/module/cpu_boost/parameters/input_boost_ms 350
-    write /sys/module/cpu_boost/parameters/load_based_syncs 1
-    write /sys/module/cpu_boost/parameters/migration_load_threshold 30
-    write /sys/module/cpu_boost/parameters/hotplug_boost 0
 
-    #tune msm_hotplug
+    # msm_hotplug
     write /sys/module/msm_hotplug/boost_lock_duration 350
     write /sys/module/msm_hotplug/down_lock_duration 350
-    write /sys/module/msm_hotplug/fast_lane_load 100
-    write /sys/module/msm_hotplug/history_size 20
     write /sys/module/msm_hotplug/update_rates "200 5:100 50:50 350:200"
+    write /sys/module/msm_hotplug/fast_lane_load 100
+    write /sys/module/msm_hotplug/history_size 10
 
-    write isys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 300000
-    write isys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 300000
-    write isys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 300000
+    # allow system to modify ksm control files
+    chown root system /sys/kernel/mm/ksm/pages_to_scan
+    chmod 0664 /sys/kernel/mm/ksm/pages_to_scan
+    chown root system /sys/kernel/mm/ksm/sleep_millisecs
+    chmod 0664 /sys/kernel/mm/ksm/sleep_millisecs
+    chown root system /sys/kernel/mm/ksm/run
+    chmod 0664 /sys/kernel/mm/ksm/run
+    write /sys/kernel/mm/ksm/sleep_millisecs 1500
+    write /sys/kernel/mm/ksm/pages_to_scan 256
+    write /sys/kernel/mm/ksm/deferred_timer 1
+    write /sys/kernel/mm/ksm/run 1
+
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 300000
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 300000
+    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 300000
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 300000
+    write /sys/module/msm_thermal/core_control/enabled 1
     chown root.system /sys/devices/system/cpu/mfreq
     chmod 220 /sys/devices/system/cpu/mfreq
-    chown root.system /sys/devices/system/cpu/cpu1/online
-    chown root.system /sys/devices/system/cpu/cpu2/online
-    chown root.system /sys/devices/system/cpu/cpu3/online
+    chown system system /sys/devices/system/cpu/cpu1/online
+    chown system system /sys/devices/system/cpu/cpu2/online
+    chown system system /sys/devices/system/cpu/cpu3/online
     chmod 664 /sys/devices/system/cpu/cpu1/online
     chmod 664 /sys/devices/system/cpu/cpu2/online
     chmod 664 /sys/devices/system/cpu/cpu3/online
     write /dev/cpuctl/apps/cpu.notify_on_migrate 1
+
+    # Hardware tunables
+    chown system system /sys/devices/virtual/timed_output/vibrator/amp
+    chmod 0664 /sys/devices/virtual/timed_output/vibrator/amp
+    chown system system /sys/devices/virtual/graphics/fb0/rgb
+    chmod 0664 /sys/devices/virtual/graphics/fb0/rgb
+
+    setprop vold.post_fs_data_done 1
 
 on charger
     # Booting modem
@@ -317,18 +333,17 @@ on property:sys.boot_completed=1
     write /sys/module/pm_8x60/modes/cpu3/retention/idle_enabled 1
     #start mpdecision
 
-
     # enable slimport detection
     write /sys/module/slimport/parameters/enable_irq 1
 
     # enable logging of wake up reasons to kernel logs
-    # write /sys/module/msm_show_resume_irq/parameters/debug_mask 1
+    write /sys/module/msm_show_resume_irq/parameters/debug_mask 1
 
 on property:init.svc.bootanim=stopped
-    write /sys/block/mmcblk0/queue/scheduler fiops
+    write /sys/block/mmcblk0/queue/scheduler bfq
 
 on property:ro.debuggable=1
-    #start ssr_ramdump
+    start ssr_ramdump
 
 service rmt_storage /system/bin/rmt_storage
     class core
@@ -485,7 +500,7 @@ service bugreport /system/bin/dumpstate -d -p -B \
     oneshot
     keycodes 114 115 116
 
-service mpdecision /system/bin/mpdecision --avg_comp --Nw=1:1.99 --Nw=2:2.99 --Nw=3:3.99 --Tw=2:140 --Tw=3:140 --Ts=2:190 --Ts=3:190
+service mpdecision /system/bin/mpdecision --avg_comp
    class main
    user root
    group root system
@@ -498,10 +513,9 @@ service ssr_ramdump /system/bin/subsystem_ramdump -m -t emmc
     disabled
 
 service thermal-engine /system/bin/thermal-engine-hh
-    class main
-    user root
-    group radio system
-    disabled
+   class main
+   user root
+   group radio system
 
 service vss_init /vendor/bin/vss_init
     class late_start
