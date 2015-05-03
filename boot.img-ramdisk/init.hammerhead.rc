@@ -221,8 +221,8 @@ on post-fs-data
     write /sys/devices/system/cpu/cpufreq/interactive/timer_slack 30000
 
     # cpu-boost
-    # write /sys/module/cpu_boost/parameters/boost_ms 20
-    write /sys/module/cpu_boost/parameters/sync_threshold 1728000
+    write /sys/module/cpu_boost/parameters/boost_ms 0
+    write /sys/module/cpu_boost/parameters/sync_threshold 0
     write /sys/module/cpu_boost/parameters/input_boost_freq 1190400
     write /sys/module/cpu_boost/parameters/input_boost_ms 350
 
@@ -232,6 +232,11 @@ on post-fs-data
     write /sys/module/msm_hotplug/update_rates "200 5:100 50:50 350:200"
     write /sys/module/msm_hotplug/fast_lane_load 100
     write /sys/module/msm_hotplug/history_size 10
+
+    #other
+    write /sys/devices/system/cpu/sched_mc_power_savings 2
+    write /sys/module/workqueue/parameters/power_efficient 1
+    write /sys/class/kgsl/kgsl-3d0/pwrscale/trustzone/governor "simple"
 
     # allow system to modify ksm control files
     chown root system /sys/kernel/mm/ksm/pages_to_scan
