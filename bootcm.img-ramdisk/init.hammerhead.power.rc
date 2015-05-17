@@ -31,9 +31,7 @@ on boot
     write /sys/module/msm_thermal/core_control/enabled 1
 
 on early-init
-    write /sys/block/mmcblk0/queue/nomerges 0
-    write /sys/block/mmcblk0/queue/rq_affinity 1
-    write /sys/block/mmcblk0/queue/add_random 0
+    write /sys/block/mmcblk0/bdi/read_ahead_kb 512
 
 on property:service.bootanim.exit=1
     # Enable Power modes
@@ -84,98 +82,34 @@ on property:init.svc.bootanim=stopped
     write /sys/devices/system/cpu/cpufreq/ondemand/sync_freq 960000
     write /sys/devices/system/cpu/cpufreq/ondemand/up_threshold_any_cpu_load 85
 
-    # impulse
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor impulse
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor impulse
-    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor impulse
-    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor impulse
-    write /sys/devices/system/cpu/cpufreq/impulse/above_hispeed_delay "20000 1400000:40000 1700000:20000"
-    write /sys/devices/system/cpu/cpufreq/impulse/hispeed_freq 1190400
-    write /sys/devices/system/cpu/cpufreq/impulse/target_loads "85 1500000:90 1800000:70"
-    write /sys/devices/system/cpu/cpufreq/impulse/min_sample_time 40000
-    write /sys/devices/system/cpu/cpufreq/impulse/timer_rate 30000
-    write /sys/devices/system/cpu/cpufreq/impulse/max_freq_hysteresis 100000
-    write /sys/devices/system/cpu/cpufreq/impulse/timer_slack 30000
-    write /dev/cpuctl/apps/cpu.notify_on_migrate 1
+    # interactive
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor interactive
+    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor interactive
+    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor interactive
+    write /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay "20000 1400000:40000 1700000:20000"
+    write /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load 90
+    write /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq 1190400
+    write /sys/devices/system/cpu/cpufreq/interactive/io_is_busy 1
+    write /sys/devices/system/cpu/cpufreq/interactive/target_loads "85 1500000:90 1800000:70"
+    write /sys/devices/system/cpu/cpufreq/interactive/min_sample_time 40000
+    write /sys/devices/system/cpu/cpufreq/interactive/timer_rate 30000
+    write /sys/devices/system/cpu/cpufreq/interactive/max_freq_hysteresis 100000
+    write /sys/devices/system/cpu/cpufreq/interactive/timer_slack 30000
 
-    # scheduler		
-    write /sys/block/mmcblk0/queue/scheduler bfq
-
-# CM Performance Profiles
-
-    setprop sys.perf.profile 1
-
-# Powersave
-on property:sys.perf.profile=0
-    write /sys/class/devfreq/qcom,cpubw.41/governor "powersave"
-    write /sys/class/kgsl/kgsl-3d0/devfreq/governor "powersave"
-    write /sys/module/workqueue/parameters/power_efficient 1
-    write /sys/devices/system/cpu/sched_mc_power_savings 2
-
-    write /sys/module/msm_hotplug/boost_lock_duration 150
-    write /sys/module/msm_hotplug/down_lock_duration 0
-    write /sys/module/msm_hotplug/update_rates "200 5:100 50:50 350:200"
-    write /sys/module/msm_hotplug/fast_lane_load 201
-
-    write /sys/devices/system/cpu/cpufreq/impulse/go_lowspeed_load 10
-    write /sys/devices/system/cpu/cpufreq/impulse/go_hispeed_load 0
-    write /sys/devices/system/cpu/cpufreq/impulse/io_is_busy 0
-
-    write /sys/module/cpu_boost/parameters/boost_ms 0
-    write /sys/module/cpu_boost/parameters/sync_threshold 0
-    write /sys/module/cpu_boost/parameters/input_boost_freq 1190400
-    write /sys/module/cpu_boost/parameters/input_boost_ms 150
-    write /sys/module/cpu_boost/parameters/load_based_syncs 0
-    write /sys/module/cpu_boost/parameters/hotplug_boost 0
-
-# Balanced
-on property:sys.perf.profile=1
-    write /sys/class/devfreq/qcom,cpubw.41/governor "cpubw_hwmon"
-    write /sys/class/kgsl/kgsl-3d0/devfreq/governor "msm-adreno-tz"
-    write /sys/module/workqueue/parameters/power_efficient 1
-    write /sys/devices/system/cpu/sched_mc_power_savings 2
-
-    write /sys/module/msm_hotplug/boost_lock_duration 350
-    write /sys/module/msm_hotplug/down_lock_duration 350
-    write /sys/module/msm_hotplug/update_rates "200 5:100 50:50 350:200"
-    write /sys/module/msm_hotplug/fast_lane_load 100
-    write /sys/module/msm_hotplug/history_size 10
-
-    # impulse
-    write /sys/devices/system/cpu/cpufreq/impulse/go_lowspeed_load 0
-    write /sys/devices/system/cpu/cpufreq/impulse/go_hispeed_load 0
-    write /sys/devices/system/cpu/cpufreq/impulse/io_is_busy 1
+    # sched
+    write /dev/cpuctl/cpu.notify_on_migrate 1
 
     # cpu-boost
-    write /sys/module/cpu_boost/parameters/boost_ms 0
-    write /sys/module/cpu_boost/parameters/sync_threshold 0
-    write /sys/module/cpu_boost/parameters/input_boost_freq 1190400 
-    write /sys/module/cpu_boost/parameters/input_boost_ms 350
-    write /sys/module/cpu_boost/parameters/load_based_syncs 1
-    write /sys/module/cpu_boost/parameters/migration_load_threshold 40
-    write /sys/module/cpu_boost/parameters/hotplug_boost 0
-
-# High performance
-on property:sys.perf.profile=2
-    write /sys/class/devfreq/qcom,cpubw.41/governor "performance"
-    write /sys/class/kgsl/kgsl-3d0/devfreq/governor "performance"
-    write /sys/module/workqueue/parameters/power_efficient 0
-    write /sys/devices/system/cpu/sched_mc_power_savings 0
-
-    write /sys/module/msm_hotplug/boost_lock_duration 500
-    write /sys/module/msm_hotplug/down_lock_duration 750
-    write /sys/module/msm_hotplug/update_rates 10
-    write /sys/module/msm_hotplug/fast_lane_load 99
-
-    # impulse
-    write /sys/devices/system/cpu/cpufreq/impulse/go_lowspeed_load 0
-    write /sys/devices/system/cpu/cpufreq/impulse/go_hispeed_load 90
-    write /sys/devices/system/cpu/cpufreq/impulse/io_is_busy 1
-
-    # cpu-boost
-    write /sys/module/cpu_boost/parameters/boost_ms 20
+    # write /sys/module/cpu_boost/parameters/boost_ms 20
     write /sys/module/cpu_boost/parameters/sync_threshold 1728000
     write /sys/module/cpu_boost/parameters/input_boost_freq 1497600
     write /sys/module/cpu_boost/parameters/input_boost_ms 500
-    write /sys/module/cpu_boost/parameters/load_based_syncs 1
-    write /sys/module/cpu_boost/parameters/hotplug_boost 1
+
+    # devfreq
+    write /sys/class/devfreq/qcom,cpubw.41/governor cpubw_hwmon
+
+    # io scheduler
+    write /sys/block/mmcblk0/queue/scheduler row
+
+    start mpdecision
