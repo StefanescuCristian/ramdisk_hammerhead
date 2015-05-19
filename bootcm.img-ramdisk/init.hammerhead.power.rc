@@ -103,8 +103,8 @@ on property:init.svc.bootanim=stopped
     # cpu-boost
     # write /sys/module/cpu_boost/parameters/boost_ms 20
     write /sys/module/cpu_boost/parameters/sync_threshold 1728000
-    write /sys/module/cpu_boost/parameters/input_boost_freq 1497600
-    write /sys/module/cpu_boost/parameters/input_boost_ms 500
+    write /sys/module/cpu_boost/parameters/input_boost_freq 1190400
+    write /sys/module/cpu_boost/parameters/input_boost_ms 350
 
     # devfreq
     write /sys/class/devfreq/qcom,cpubw.41/governor cpubw_hwmon
@@ -123,5 +123,7 @@ on property:init.svc.bootanim=stopped
     write /sys/kernel/mm/ksm/pages_to_scan 256
     write /sys/kernel/mm/ksm/deferred_timer 1
     write /sys/kernel/mm/ksm/run 1
+
+    write /sys/devices/system/cpu/sched_mc_power_savings 2
 
     start mpdecision
