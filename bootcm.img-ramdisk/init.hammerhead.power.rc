@@ -124,6 +124,4 @@ on property:init.svc.bootanim=stopped
     write /sys/kernel/mm/ksm/deferred_timer 1
     write /sys/kernel/mm/ksm/run 1
 
-    write /sys/devices/system/cpu/sched_mc_power_savings 2
-
     start mpdecision
