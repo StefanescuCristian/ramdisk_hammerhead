@@ -129,3 +129,5 @@ on property:init.svc.bootanim=stopped
     write /sys/module/msm_hotplug/boost_lock_duration 350	
     write /sys/module/msm_hotplug/down_lock_duration 350
     write /sys/module/msm_hotplug/update_rates "200 5:100 50:50 350:200"
+
+    write /sys/devices/system/cpu/sched_mc_power_savings 2
