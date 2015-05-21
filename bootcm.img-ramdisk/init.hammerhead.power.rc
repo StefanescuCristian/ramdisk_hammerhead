@@ -124,10 +124,10 @@ on property:init.svc.bootanim=stopped
     write /sys/kernel/mm/ksm/deferred_timer 1
     write /sys/kernel/mm/ksm/run 1
 
-    #start mpdecision
+    start mpdecision
     #tune msm_hotplug
-    write /sys/module/msm_hotplug/boost_lock_duration 350	
-    write /sys/module/msm_hotplug/down_lock_duration 350
-    write /sys/module/msm_hotplug/update_rates "200 5:100 50:50 350:200"
+    #write /sys/module/msm_hotplug/boost_lock_duration 350	
+    #write /sys/module/msm_hotplug/down_lock_duration 350
+    #write /sys/module/msm_hotplug/update_rates "200 5:100 50:50 350:200"
 
-    write /sys/devices/system/cpu/sched_mc_power_savings 2
+    #write /sys/devices/system/cpu/sched_mc_power_savings 2
