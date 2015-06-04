@@ -272,6 +272,13 @@ on property:sys.boot_completed=1
     # enable logging of wake up reasons to kernel logs
     write /sys/module/msm_show_resume_irq/parameters/debug_mask 1
 
+    #use elementalx gov
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor elementalx
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor elementalx
+    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor elementalx
+    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor elementalx
+
+
 on property:ro.debuggable=1
     start ssr_ramdump
 
@@ -422,7 +429,7 @@ service bugreport /system/bin/dumpstate -d -p -B \
     oneshot
     keycodes 114 115 116
 
-service mpdecision /system/bin/mpdecision --no_sleep --avg_comp
+service mpdecision /system/bin/mpdecision --no_sleep --avg_comp --Nw=1:1.99 --Nw=2:2.99 --Nw=3:3.99 --Tw=2:140 --Tw=3:140 --Ts=2:190 --Ts=3:190
    class main
    user root
    group root system
