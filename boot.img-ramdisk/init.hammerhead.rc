@@ -279,7 +279,7 @@ on property:sys.boot_completed=1
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor elementalx
 
     #others
-    write /sys/devices/system/cpu/sched_mc_power_savings 2
+    #write /sys/devices/system/cpu/sched_mc_power_savings 2
 
     write /sys/kernel/mm/ksm/sleep_millisecs 1500
     write /sys/kernel/mm/ksm/pages_to_scan 256
