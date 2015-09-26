@@ -124,7 +124,7 @@ on post-fs-data
 
     # Subsytem Ramdump collection
     mkdir /data/tombstones/ramdump 0777 system system
-    write /sys/module/subsystem_restart/parameters/enable_ramdumps 0
+    write /sys/module/subsystem_restart/parameters/enable_ramdumps 1
 
     # NFC: create data/nfc for nv storage
     mkdir /data/nfc 0770 nfc nfc
@@ -272,22 +272,8 @@ on property:sys.boot_completed=1
     # enable logging of wake up reasons to kernel logs
     write /sys/module/msm_show_resume_irq/parameters/debug_mask 1
 
-    #use elementalx gov
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor elementalx
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor elementalx
-    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor elementalx
-    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor elementalx
-
-    #others
-    #write /sys/devices/system/cpu/sched_mc_power_savings 2
-
-    write /sys/kernel/mm/ksm/sleep_millisecs 1500
-    write /sys/kernel/mm/ksm/pages_to_scan 256
-    write /sys/kernel/mm/ksm/deferred_timer 1
-    write /sys/kernel/mm/ksm/run 1
-
 on property:ro.debuggable=1
-#    start ssr_ramdump
+    start ssr_ramdump
 
 service rmt_storage /system/bin/rmt_storage
     class core
