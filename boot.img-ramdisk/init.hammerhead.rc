@@ -206,7 +206,7 @@ on post-fs-data
     # cpu-boost
     # write /sys/module/cpu_boost/parameters/boost_ms 20
     write /sys/module/cpu_boost/parameters/sync_threshold 1728000
-    write /sys/module/cpu_boost/parameters/input_boost_freq 1267200
+    write /sys/module/cpu_boost/parameters/input_boost_freq 960000
     write /sys/module/cpu_boost/parameters/input_boost_ms 500
 
     #powersaving_mc
